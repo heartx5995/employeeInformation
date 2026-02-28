@@ -10,7 +10,7 @@ namespace employeeInformation
         static List<string> empName = new List<string>();
         static List<char> empGender = new List<char>();
         static List<string> empBirthdate = new List<string>(); //birthdate = dd/mm/yyyy
-        static List<long> empPhone = new List<long>(); //phone - (CTRYnum)#############
+        static List<long> empPhone = new List<long>(); //phone - will change to (CTRYnum)############# format in later commit.
         static List<string> empEmail = new List<string>();
         static List<string> empAddress = new List<string>();
         static List<string> empPosition = new List<string>();
@@ -23,7 +23,7 @@ namespace employeeInformation
             {
                 Console.WriteLine("EMPLOYEE MANAGEMENT SYSTEM");
                 Console.WriteLine("\nSELECT OPTION");
-                Console.WriteLine("1 - ADD | 2 - VIEW ALL | 3 - UPDATE | 4 - DELETE | 5 - EXIT SYSTEM.");
+                Console.Write("1 - ADD | 2 - VIEW ALL | 3 - UPDATE | 4 - DELETE | 5 - EXIT SYSTEM. SELECT: ");
                 select = int.Parse(Console.ReadLine());
 
                 switch (select)
@@ -32,7 +32,7 @@ namespace employeeInformation
                         addEmp();
                         break;
                     case 2:
-                        dispEmp();
+                        dispEmp(); //FIX IN PROGRESS
                         break;
                     case 3:
                         updateEmp();
@@ -42,6 +42,7 @@ namespace employeeInformation
                         break;
                     case 5:
                         Console.WriteLine("Exiting system...");
+                        return;
                         break;
                     default:
                         Console.WriteLine("Input not recognized. Please see options list.");
@@ -64,10 +65,27 @@ namespace employeeInformation
             Console.Write("Address: "); string address = Console.ReadLine();
             Console.Write("Company Position: "); string position = Console.ReadLine();
             Console.Write("Salary: PHP "); float salary = float.Parse(Console.ReadLine());
+
+            empID.Add(id);
+            empName.Add(name);
+            empGender.Add(gender);
+            empBirthdate.Add(birthdate);
+            empPhone.Add(phone);
+            empEmail.Add(email);
+            empAddress.Add(address);
+            empPosition.Add(position);
+            empSalary.Add(salary);
         }
         static void dispEmp()
         {
-
+            Console.WriteLine("\nEMPLOYEE LIST"); //ERROR WHEN CALLED. FIX IN PROGRESS
+            for (int i = 0; i <= empID.Count; i++)
+            {
+                Console.WriteLine("\n");
+                Console.WriteLine($"ID: {empID[i]} | NAME: {empName[1]} | GENDER: {empGender[1]} | BIRTHDATE: {empBirthdate[i]}");
+                Console.WriteLine($"PHONE: {empPhone[i]} | EMAIL: {empEmail[i]} | ADDRESS: {empAddress[i]}");
+                Console.WriteLine($"POSITION: {empPosition[i]} | SALARY: PHP{empSalary[i]}");
+            }
         }
         static void updateEmp()
         {
