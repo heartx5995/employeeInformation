@@ -32,13 +32,13 @@ namespace employeeInformation
                         addEmp();
                         break;
                     case 2:
-                        dispEmp(); //FIX IN PROGRESS
+                        dispEmp();
                         break;
                     case 3:
-                        updateEmp();
+                        updateEmp(); //IN LATER COMMIT
                         break;
                     case 4:
-                        delEmp();
+                        delEmp(); //IN LATER COMMIT
                         break;
                     case 5:
                         Console.WriteLine("Exiting system...");
@@ -78,11 +78,11 @@ namespace employeeInformation
         }
         static void dispEmp()
         {
-            Console.WriteLine("\nEMPLOYEE LIST"); //ERROR WHEN CALLED. FIX IN PROGRESS
-            for (int i = 0; i <= empID.Count; i++)
+            Console.WriteLine("\nEMPLOYEE LIST");
+            for (int i = 0; i < empID.Count; i++)
             {
                 Console.WriteLine("\n");
-                Console.WriteLine($"ID: {empID[i]} | NAME: {empName[1]} | GENDER: {empGender[1]} | BIRTHDATE: {empBirthdate[i]}");
+                Console.WriteLine($"ID: {empID[i]} | NAME: {empName[i]} | GENDER: {empGender[i]} | BIRTHDATE: {empBirthdate[i]}");
                 Console.WriteLine($"PHONE: {empPhone[i]} | EMAIL: {empEmail[i]} | ADDRESS: {empAddress[i]}");
                 Console.WriteLine($"POSITION: {empPosition[i]} | SALARY: PHP{empSalary[i]}");
             }
