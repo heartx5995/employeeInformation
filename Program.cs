@@ -6,11 +6,11 @@ namespace employeeInformation
     internal class Program
     {
         //emp variables; id, name, sex, age/birthdate, phone number, email, address, company position, salary.
-        static List<string> empID = new List<string>(); //id = 5 char length; 0-9, A-Z, a-z; eg Az14Q.
+        static List<string> empID = new List<string>();
         static List<string> empName = new List<string>();
         static List<char> empGender = new List<char>();
-        static List<string> empBirthdate = new List<string>(); //birthdate = dd/mm/yyyy
-        static List<long> empPhone = new List<long>(); //phone - will change to (CTRYnum)############# format in later commit.
+        static List<string> empBirthdate = new List<string>();
+        static List<long> empPhone = new List<long>();
         static List<string> empEmail = new List<string>();
         static List<string> empAddress = new List<string>();
         static List<string> empPosition = new List<string>();
@@ -35,10 +35,10 @@ namespace employeeInformation
                         dispEmp();
                         break;
                     case 3:
-                        updateEmp(); //IN LATER COMMIT
+                        updateEmp();
                         break;
                     case 4:
-                        delEmp(); //IN LATER COMMIT
+                        delEmp();
                         break;
                     case 5:
                         Console.WriteLine("Exiting system...");
@@ -79,21 +79,109 @@ namespace employeeInformation
         static void dispEmp()
         {
             Console.WriteLine("\nEMPLOYEE LIST");
-            for (int i = 0; i < empID.Count; i++)
+
+            int showBy = 0;
+
+            Console.WriteLine("1 = SHOW ID LIST || 2 = SHOW BY ID (TYPE IN EMPLOYEE ID)");
+            Console.Write("Enter: ");
+            showBy = int.Parse(Console.ReadLine());
+
+            if (showBy == 1)
             {
-                Console.WriteLine("\n");
-                Console.WriteLine($"ID: {empID[i]} | NAME: {empName[i]} | GENDER: {empGender[i]} | BIRTHDATE: {empBirthdate[i]}");
-                Console.WriteLine($"PHONE: {empPhone[i]} | EMAIL: {empEmail[i]} | ADDRESS: {empAddress[i]}");
-                Console.WriteLine($"POSITION: {empPosition[i]} | SALARY: PHP{empSalary[i]}");
+                Console.WriteLine("\nEMPLOYEE IDS:");
+
+                for (int i = 0; i < empID.Count; i++)
+                {
+                    Console.WriteLine(empID[i]);
+                }
+            }
+
+            else if (showBy == 2)
+            {
+                Console.Write("\nEnter Employee ID: ");
+                string searchID = Console.ReadLine();
+
+                int index = empID.IndexOf(searchID);
+
+                if (index != -1)
+                {
+                    Console.WriteLine("\nEMPLOYEE DETAILS");
+                    Console.WriteLine($"ID: {empID[index]}");
+                    Console.WriteLine($"NAME: {empName[index]}");
+                    Console.WriteLine($"GENDER: {empGender[index]}");
+                    Console.WriteLine($"BIRTHDATE: {empBirthdate[index]}");
+                    Console.WriteLine($"PHONE NO.: {empPhone[index]}");
+                    Console.WriteLine($"EMAIL: {empEmail[index]}");
+                    Console.WriteLine($"ADDRESS: {empAddress[index]}");
+                    Console.WriteLine($"POSITION: {empPosition[index]}");
+                    Console.WriteLine($"SALARY: {empSalary[index]}");
+                }
+                else
+                {
+                    Console.WriteLine("Employee ID not found.");
+                }
+            }
+            else
+            {
+                Console.WriteLine("Invalid option.");
             }
         }
         static void updateEmp()
         {
+            Console.WriteLine("\nUPDATE EMPLOYEE");
 
+            Console.Write("Enter Employee ID: ");
+            string searchID = Console.ReadLine();
+
+            int index = empID.IndexOf(searchID);
+
+            if (index != -1)
+            {
+                Console.WriteLine("\nENTER NEW INFORMATION");
+
+                Console.Write("Name: "); empName[index] = Console.ReadLine();
+                Console.Write("Gender (F/M): "); empGender[index] = char.Parse(Console.ReadLine());
+                Console.Write("Birthdate (dd/mm/yyyy): "); empBirthdate[index] = Console.ReadLine();
+                Console.Write("Phone no.: "); empPhone[index] = long.Parse(Console.ReadLine());
+                Console.Write("Email: "); empEmail[index] = Console.ReadLine();
+                Console.Write("Address: "); empAddress[index] = Console.ReadLine();
+                Console.Write("Company Position: "); empPosition[index] = Console.ReadLine();
+                Console.Write("Salary: PHP "); empSalary[index] = float.Parse(Console.ReadLine());
+
+                Console.WriteLine("Employee information updated.");
+            }
+            else
+            {
+                Console.WriteLine("Employee ID not found.");
+            }
         }
         static void delEmp()
         {
+            Console.WriteLine("\nDELETE EMPLOYEE");
 
+            Console.Write("Enter Employee ID: ");
+            string searchID = Console.ReadLine();
+
+            int index = empID.IndexOf(searchID);
+
+            if (index != -1)
+            {
+                empID.RemoveAt(index);
+                empName.RemoveAt(index);
+                empGender.RemoveAt(index);
+                empBirthdate.RemoveAt(index);
+                empPhone.RemoveAt(index);
+                empEmail.RemoveAt(index);
+                empAddress.RemoveAt(index);
+                empPosition.RemoveAt(index);
+                empSalary.RemoveAt(index);
+
+                Console.WriteLine("Employee deleted.");
+            }
+            else
+            {
+                Console.WriteLine("Employee ID not found.");
+            }
         }
     }
 }
