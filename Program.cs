@@ -5,7 +5,7 @@ namespace employeeInformation
 {
     internal class Program
     {
-        //emp variables; id, name, sex, age/birthdate, phone number, email, address, company position, salary.
+        /*//emp variables; id, name, sex, age/birthdate, phone number, email, address, company position, salary.
         static List<string> empID = new List<string>();
         static List<string> empName = new List<string>();
         static List<char> empGender = new List<char>();
@@ -15,6 +15,10 @@ namespace employeeInformation
         static List<string> empAddress = new List<string>();
         static List<string> empPosition = new List<string>();
         static List<float> empSalary = new List<float>();
+        */
+
+        static EBL empBL = new EBL();
+
         static void Main(string[] args)
         {
             int select = 0;
@@ -29,16 +33,16 @@ namespace employeeInformation
                 switch (select)
                 {
                     case 1:
-                        addEmp();
+                        empBL.addEmp();
                         break;
                     case 2:
-                        dispEmp();
+                        empBL.dispEmp();
                         break;
                     case 3:
-                        updateEmp();
+                        empBL.updateEmp();
                         break;
                     case 4:
-                        delEmp();
+                        empBL.delEmp();
                         break;
                     case 5:
                         Console.WriteLine("Exiting system...");
@@ -52,7 +56,7 @@ namespace employeeInformation
 
         }
 
-        static void addEmp()
+        /*static void addEmp()
         {
             Console.WriteLine("\nADD EMPLOYEE");
 
@@ -182,6 +186,6 @@ namespace employeeInformation
             {
                 Console.WriteLine("Employee ID not found.");
             }
-        }
+        }*/
     }
 }
