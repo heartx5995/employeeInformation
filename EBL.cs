@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Net;
 using System.Text;
+using System.Linq;
 
 namespace employeeInformation
 {
@@ -23,15 +24,19 @@ namespace employeeInformation
             Console.Write("Company Position: "); string position = Console.ReadLine();
             Console.Write("Salary: PHP "); float salary = float.Parse(Console.ReadLine());
 
-            empDL.empID.Add(id);
-            empDL.empName.Add(name);
-            empDL.empGender.Add(gender);
-            empDL.empBirthdate.Add(birthdate);
-            empDL.empPhone.Add(phone);
-            empDL.empEmail.Add(email);
-            empDL.empAddress.Add(address);
-            empDL.empPosition.Add(position);
-            empDL.empSalary.Add(salary);
+            Employee emp = new Employee();
+
+            emp.ID = id;
+            emp.Name = name;
+            emp.Gender = gender;
+            emp.Birthdate = birthdate;
+            emp.Phone = phone;
+            emp.Email = email;
+            emp.Address = address;
+            emp.Position = position;
+            emp.Salary = salary;
+
+            empDL.employees.Add(emp);
         }
         public void dispEmp()
         {
@@ -47,9 +52,9 @@ namespace employeeInformation
             {
                 Console.WriteLine("\nEMPLOYEE IDS:");
 
-                for (int i = 0; i < empDL.empID.Count; i++)
+                for (int i = 0; i < empDL.employees.Count; i++)
                 {
-                    Console.WriteLine(empDL.empID[i]);
+                    Console.WriteLine(empDL.employees[i].ID);
                 }
             }
 
@@ -58,20 +63,20 @@ namespace employeeInformation
                 Console.Write("\nEnter Employee ID: ");
                 string searchID = Console.ReadLine();
 
-                int index = empDL.empID.IndexOf(searchID);
+                Employee e = empDL.employees.FirstOrDefault(emp => emp.ID == searchID);
 
-                if (index != -1)
+                if (e != null)
                 {
                     Console.WriteLine("\nEMPLOYEE DETAILS");
-                    Console.WriteLine($"ID: {empDL.empID[index]}");
-                    Console.WriteLine($"NAME: {empDL.empName[index]}");
-                    Console.WriteLine($"GENDER: {empDL.empGender[index]}");
-                    Console.WriteLine($"BIRTHDATE: {empDL.empBirthdate[index]}");
-                    Console.WriteLine($"PHONE NO.: {empDL.empPhone[index]}");
-                    Console.WriteLine($"EMAIL: {empDL.empEmail[index]}");
-                    Console.WriteLine($"ADDRESS: {empDL.empAddress[index]}");
-                    Console.WriteLine($"POSITION: {empDL.empPosition[index]}");
-                    Console.WriteLine($"SALARY: {empDL.empSalary[index]}");
+                    Console.WriteLine($"ID: {e.ID}");
+                    Console.WriteLine($"NAME: {e.Name}");
+                    Console.WriteLine($"GENDER: {e.Gender}");
+                    Console.WriteLine($"BIRTHDATE: {e.Birthdate}");
+                    Console.WriteLine($"PHONE NO.: {e.Phone}");
+                    Console.WriteLine($"EMAIL: {e.Email}");
+                    Console.WriteLine($"ADDRESS: {e.Address}");
+                    Console.WriteLine($"POSITION: {e.Position}");
+                    Console.WriteLine($"SALARY: {e.Salary}");
                 }
                 else
                 {
@@ -90,20 +95,22 @@ namespace employeeInformation
             Console.Write("Enter Employee ID: ");
             string searchID = Console.ReadLine();
 
-            int index = empDL.empID.IndexOf(searchID);
+            int index = empDL.findIndex(searchID);
 
-            if (index != -1)
+            Employee e = empDL.employees.FirstOrDefault(emp => emp.ID == searchID);
+
+            if (e != null)
             {
                 Console.WriteLine("\nENTER NEW INFORMATION");
 
-                Console.Write("Name: "); empDL.empName[index] = Console.ReadLine();
-                Console.Write("Gender (F/M): "); empDL.empGender[index] = char.Parse(Console.ReadLine());
-                Console.Write("Birthdate (dd/mm/yyyy): "); empDL.empBirthdate[index] = Console.ReadLine();
-                Console.Write("Phone no.: "); empDL.empPhone[index] = long.Parse(Console.ReadLine());
-                Console.Write("Email: "); empDL.empEmail[index] = Console.ReadLine();
-                Console.Write("Address: "); empDL.empAddress[index] = Console.ReadLine();
-                Console.Write("Company Position: "); empDL.empPosition[index] = Console.ReadLine();
-                Console.Write("Salary: PHP "); empDL.empSalary[index] = float.Parse(Console.ReadLine());
+                Console.Write("Name: "); e.Name = Console.ReadLine();
+                Console.Write("Gender (F/M): "); e.Gender = char.Parse(Console.ReadLine());
+                Console.Write("Birthdate (dd/mm/yyyy): "); e.Birthdate = Console.ReadLine();
+                Console.Write("Phone no.: "); e.Phone = long.Parse(Console.ReadLine());
+                Console.Write("Email: "); e.Email = Console.ReadLine();
+                Console.Write("Address: "); e.Address = Console.ReadLine();
+                Console.Write("Company Position: "); e.Position = Console.ReadLine();
+                Console.Write("Salary: PHP "); e.Salary = float.Parse(Console.ReadLine());
 
                 Console.WriteLine("Employee information updated.");
             }
@@ -119,20 +126,11 @@ namespace employeeInformation
             Console.Write("Enter Employee ID: ");
             string searchID = Console.ReadLine();
 
-            int index = empDL.empID.IndexOf(searchID);
+            Employee e = empDL.employees.FirstOrDefault(emp => emp.ID == searchID);
 
-            if (index != -1)
+            if (e != null)
             {
-                empDL.empID.RemoveAt(index);
-                empDL.empName.RemoveAt(index);
-                empDL.empGender.RemoveAt(index);
-                empDL.empBirthdate.RemoveAt(index);
-                empDL.empPhone.RemoveAt(index);
-                empDL.empEmail.RemoveAt(index);
-                empDL.empAddress.RemoveAt(index);
-                empDL.empPosition.RemoveAt(index);
-                empDL.empSalary.RemoveAt(index);
-
+                empDL.employees.Remove(e);
                 Console.WriteLine("Employee deleted.");
             }
             else
