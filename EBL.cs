@@ -1,21 +1,27 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Net;
-using System.Text;
 using System.Linq;
 
 namespace employeeInformation
 {
     public class EBL
     {
-        static EDL empDL = new EDL();
+        static IDataService dataService;
+
+        public EBL()
+        {
+            dataService = new empDbData();
+        }
 
         public void addEmp()
         {
             Console.WriteLine("\nADD EMPLOYEE");
 
             Console.Write("ID: "); string id = Console.ReadLine();
-            Console.Write("Name: "); string name = Console.ReadLine();
+            Console.Write("First Name: "); string firstName = Console.ReadLine();
+            Console.Write("Last Name: "); string lastName = Console.ReadLine();
+            Console.Write("Middle Name: "); string middleName = Console.ReadLine();
+            Console.Write("Suffix (Jr., Sr., III, etc. - If applicable): "); string suffix = Console.ReadLine();
             Console.Write("Gender (F/M): "); char gender = char.Parse(Console.ReadLine());
             Console.Write("Birthdate (dd/mm/yyyy): "); string birthdate = Console.ReadLine();
             Console.Write("Phone no.: "); long phone = long.Parse(Console.ReadLine());
@@ -27,7 +33,10 @@ namespace employeeInformation
             Employee emp = new Employee();
 
             emp.ID = id;
-            emp.Name = name;
+            emp.FirstName = firstName;
+            emp.LastName = lastName;
+            emp.MiddleName = middleName;
+            emp.Suffix = suffix;
             emp.Gender = gender;
             emp.Birthdate = birthdate;
             emp.Phone = phone;
@@ -36,8 +45,10 @@ namespace employeeInformation
             emp.Position = position;
             emp.Salary = salary;
 
-            empDL.employees.Add(emp);
+            dataService.Add(emp);
+            Console.WriteLine("Employee added.");
         }
+
         public void dispEmp()
         {
             Console.WriteLine("\nEMPLOYEE LIST");
@@ -48,28 +59,32 @@ namespace employeeInformation
             Console.Write("Enter: ");
             showBy = int.Parse(Console.ReadLine());
 
+            List<Employee> employees = dataService.GetAll();
+
             if (showBy == 1)
             {
                 Console.WriteLine("\nEMPLOYEE IDS:");
 
-                for (int i = 0; i < empDL.employees.Count; i++)
+                for (int i = 0; i < employees.Count; i++)
                 {
-                    Console.WriteLine(empDL.employees[i].ID);
+                    Console.WriteLine(employees[i].ID);
                 }
             }
-
             else if (showBy == 2)
             {
                 Console.Write("\nEnter Employee ID: ");
                 string searchID = Console.ReadLine();
 
-                Employee e = empDL.employees.FirstOrDefault(emp => emp.ID == searchID);
+                Employee e = dataService.GetById(searchID);
 
                 if (e != null)
                 {
                     Console.WriteLine("\nEMPLOYEE DETAILS");
                     Console.WriteLine($"ID: {e.ID}");
-                    Console.WriteLine($"NAME: {e.Name}");
+                    Console.WriteLine($"FIRST NAME: {e.FirstName}");
+                    Console.WriteLine($"LAST NAME: {e.LastName}");
+                    Console.WriteLine($"MIDDLE NAME: {e.MiddleName}");
+                    Console.WriteLine($"SUFFIX: {e.Suffix}");
                     Console.WriteLine($"GENDER: {e.Gender}");
                     Console.WriteLine($"BIRTHDATE: {e.Birthdate}");
                     Console.WriteLine($"PHONE NO.: {e.Phone}");
@@ -88,6 +103,7 @@ namespace employeeInformation
                 Console.WriteLine("Invalid option.");
             }
         }
+
         public void updateEmp()
         {
             Console.WriteLine("\nUPDATE EMPLOYEE");
@@ -95,15 +111,16 @@ namespace employeeInformation
             Console.Write("Enter Employee ID: ");
             string searchID = Console.ReadLine();
 
-            int index = empDL.findIndex(searchID);
-
-            Employee e = empDL.employees.FirstOrDefault(emp => emp.ID == searchID);
+            Employee e = dataService.GetById(searchID);
 
             if (e != null)
             {
                 Console.WriteLine("\nENTER NEW INFORMATION");
 
-                Console.Write("Name: "); e.Name = Console.ReadLine();
+                Console.Write($"First Name ({e.FirstName}): "); e.FirstName = Console.ReadLine();
+                Console.Write($"Last Name ({e.LastName}): "); e.LastName = Console.ReadLine();
+                Console.Write($"Middle Name ({e.MiddleName}): "); e.MiddleName = Console.ReadLine();
+                Console.Write($"Suffix ({e.Suffix}): "); e.Suffix = Console.ReadLine();
                 Console.Write("Gender (F/M): "); e.Gender = char.Parse(Console.ReadLine());
                 Console.Write("Birthdate (dd/mm/yyyy): "); e.Birthdate = Console.ReadLine();
                 Console.Write("Phone no.: "); e.Phone = long.Parse(Console.ReadLine());
@@ -112,6 +129,7 @@ namespace employeeInformation
                 Console.Write("Company Position: "); e.Position = Console.ReadLine();
                 Console.Write("Salary: PHP "); e.Salary = float.Parse(Console.ReadLine());
 
+                dataService.Update(e);
                 Console.WriteLine("Employee information updated.");
             }
             else
@@ -119,6 +137,7 @@ namespace employeeInformation
                 Console.WriteLine("Employee ID not found.");
             }
         }
+
         public void delEmp()
         {
             Console.WriteLine("\nDELETE EMPLOYEE");
@@ -126,11 +145,11 @@ namespace employeeInformation
             Console.Write("Enter Employee ID: ");
             string searchID = Console.ReadLine();
 
-            Employee e = empDL.employees.FirstOrDefault(emp => emp.ID == searchID);
+            Employee e = dataService.GetById(searchID);
 
             if (e != null)
             {
-                empDL.employees.Remove(e);
+                dataService.Delete(searchID);
                 Console.WriteLine("Employee deleted.");
             }
             else
@@ -139,5 +158,9 @@ namespace employeeInformation
             }
         }
 
+        public IDataService GetDataService()
+        {
+            return dataService;
+        }
     }
 }
