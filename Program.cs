@@ -13,7 +13,9 @@ namespace employeeInformation
 
             while (select != 5)
             {
+                Console.WriteLine("\n===============================");
                 Console.WriteLine("EMPLOYEE MANAGEMENT SYSTEM");
+                Console.WriteLine("===============================");
                 Console.WriteLine("\nSELECT OPTION");
                 Console.Write("1 - ADD | 2 - VIEW ALL | 3 - UPDATE | 4 - DELETE | 5 - EXIT SYSTEM. SELECT: ");
                 select = int.Parse(Console.ReadLine());
