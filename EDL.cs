@@ -4,18 +4,21 @@ using System.Text;
 
 namespace employeeInformation
 {
-    //emp variables; id, name, gender, age/birthdate, phone number, email, address, company position, salary.
+    //emp variables; id, firstname, lastname, middlename, suffix, gender, age/birthdate, phone number, email, address, company position, salary.
     public class Employee
     {
         public string ID;
-        public string Name;
-        public char Gender;
+        public string FirstName;
+        public string LastName;
+        public string MiddleName;
+        public string Suffix;  //jr,sr,iii,etc.
+        public char   Gender;
         public string Birthdate;
-        public long Phone;
+        public long   Phone;
         public string Email;
         public string Address;
         public string Position;
-        public float Salary;
+        public float  Salary;
     }
     public class EDL
     {
