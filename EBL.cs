@@ -51,56 +51,61 @@ namespace employeeInformation
 
         public void dispEmp()
         {
-            Console.WriteLine("\nEMPLOYEE LIST");
-
-            int showBy = 0;
-
-            Console.WriteLine("1 = SHOW ID LIST || 2 = SHOW BY ID (TYPE IN EMPLOYEE ID)");
-            Console.Write("Enter: ");
-            showBy = int.Parse(Console.ReadLine());
-
-            List<Employee> employees = dataService.GetAll();
-
-            if (showBy == 1)
+            while (true)
             {
-                Console.WriteLine("\nEMPLOYEE IDS:");
+                Console.WriteLine("\nEMPLOYEE LIST");
 
-                for (int i = 0; i < employees.Count; i++)
+                string showBy;
+
+                Console.WriteLine("1 = SHOW ID LIST" +
+                                  "\n2 = SHOW BY ID (TYPE IN EMPLOYEE ID)" +
+                                  "\npress any other key to head to menu.");
+                Console.Write("Enter: ");
+                showBy = Console.ReadLine();
+
+                List<Employee> employees = dataService.GetAll();
+
+                if (showBy == "1")
                 {
-                    Console.WriteLine(employees[i].ID);
+                    Console.WriteLine("\nEMPLOYEE IDS:");
+
+                    for (int i = 0; i < employees.Count; i++)
+                    {
+                        Console.WriteLine(employees[i].ID);
+                    }
                 }
-            }
-            else if (showBy == 2)
-            {
-                Console.Write("\nEnter Employee ID: ");
-                string searchID = Console.ReadLine();
-
-                Employee e = dataService.GetById(searchID);
-
-                if (e != null)
+                else if (showBy == "2")
                 {
-                    Console.WriteLine("\nEMPLOYEE DETAILS");
-                    Console.WriteLine($"ID: {e.ID}");
-                    Console.WriteLine($"FIRST NAME: {e.FirstName}");
-                    Console.WriteLine($"LAST NAME: {e.LastName}");
-                    Console.WriteLine($"MIDDLE NAME: {e.MiddleName}");
-                    Console.WriteLine($"SUFFIX: {e.Suffix}");
-                    Console.WriteLine($"GENDER: {e.Gender}");
-                    Console.WriteLine($"BIRTHDATE: {e.Birthdate}");
-                    Console.WriteLine($"PHONE NO.: {e.Phone}");
-                    Console.WriteLine($"EMAIL: {e.Email}");
-                    Console.WriteLine($"ADDRESS: {e.Address}");
-                    Console.WriteLine($"POSITION: {e.Position}");
-                    Console.WriteLine($"SALARY: {e.Salary}");
+                    Console.Write("\nEnter Employee ID: ");
+                    string searchID = Console.ReadLine();
+
+                    Employee e = dataService.GetById(searchID);
+
+                    if (e != null)
+                    {
+                        Console.WriteLine("\nEMPLOYEE DETAILS");
+                        Console.WriteLine($"ID: {e.ID}");
+                        Console.WriteLine($"FIRST NAME: {e.FirstName}");
+                        Console.WriteLine($"LAST NAME: {e.LastName}");
+                        Console.WriteLine($"MIDDLE NAME: {e.MiddleName}");
+                        Console.WriteLine($"SUFFIX: {e.Suffix}");
+                        Console.WriteLine($"GENDER: {e.Gender}");
+                        Console.WriteLine($"BIRTHDATE: {e.Birthdate}");
+                        Console.WriteLine($"PHONE NO.: {e.Phone}");
+                        Console.WriteLine($"EMAIL: {e.Email}");
+                        Console.WriteLine($"ADDRESS: {e.Address}");
+                        Console.WriteLine($"POSITION: {e.Position}");
+                        Console.WriteLine($"SALARY: {e.Salary}");
+                    }
+                    else
+                    {
+                        Console.WriteLine("Employee ID not found.");
+                    }
                 }
                 else
                 {
-                    Console.WriteLine("Employee ID not found.");
+                    break;
                 }
-            }
-            else
-            {
-                Console.WriteLine("Invalid option.");
             }
         }
 
