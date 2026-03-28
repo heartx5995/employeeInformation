@@ -9,37 +9,43 @@ namespace employeeInformation
 
         static void Main(string[] args)
         {
-            int select = 0;
+            string inputForSelect = "";
 
-            while (select != 5)
+            while (inputForSelect != "5")
             {
                 Console.WriteLine("\n===============================");
                 Console.WriteLine("EMPLOYEE MANAGEMENT SYSTEM");
                 Console.WriteLine("===============================");
-                Console.WriteLine("\nSELECT OPTION");
-                Console.Write("1 - ADD | 2 - VIEW ALL | 3 - UPDATE | 4 - DELETE | 5 - EXIT SYSTEM. SELECT: ");
-                select = int.Parse(Console.ReadLine());
+                Console.WriteLine("\nSELECT DESIRED ACTION\n");
+                Console.Write("1 - HIRE EMPLOYEES" +
+                              "\n2 - VIEW EMPLOYEES" +
+                              "\n3 - UPDATE EMPLOYEES" +
+                              "\n4 - TERMINATE EMPLOYEES" +
+                              "\n5 - EXIT SYSTEM" +
+                              "\n\nSELECT: ");
 
-                switch (select)
+                inputForSelect = Console.ReadLine();
+                inputForSelect.ToLower();
+
+                switch (inputForSelect)
                 {
-                    case 1:
+                    case "1":
                         empBL.addEmp();
                         break;
-                    case 2:
+                    case "2":
                         empBL.dispEmp();
                         break;
-                    case 3:
+                    case "3":
                         empBL.updateEmp();
                         break;
-                    case 4:
+                    case "4":
                         empBL.delEmp();
                         break;
-                    case 5:
+                    case "5":
                         Console.WriteLine("Exiting system...");
-                        return;
                         break;
                     default:
-                        Console.WriteLine("Input not recognized. Please see options list.");
+                        Console.WriteLine("Input may not have been a number or out of bounds. Please see options list and try again.");
                         break;
                 }
             }
