@@ -26,7 +26,6 @@ namespace employeeInformation
                               "\n\nSELECT: ");
 
                 inputForSelect = Console.ReadLine();
-                //inputForSelect.ToLower();
 
                 switch (inputForSelect)
                 {
