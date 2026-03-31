@@ -1,3 +1,7 @@
 <Solution>
+  <Project Path="../Data/data.csproj" Id="fc4bc934-aab0-44b8-9498-70918046f8d6" />
+  <Project Path="../employeeAppService/employeeAppService.csproj" Id="2c923370-7592-4a67-8c99-ec772520da79" />
+  <Project Path="../employeeDataService/employeeDataService.csproj" Id="017273c3-a5f0-4a4a-ae6f-e05682bd5020" />
+  <Project Path="../employeeModels/employeeModels.csproj" Id="6b384fc0-bd97-44e2-8c57-1bd53af1e049" />
   <Project Path="employeeInformation.csproj" />
 </Solution>
