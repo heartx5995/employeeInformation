@@ -1,6 +1,6 @@
 <Solution>
-  <Project Path="../employeeAppService/employeeAppService.csproj" Id="d4f5be75-526e-4b8c-882d-7655c83756aa" />
-  <Project Path="../employeeDataService/employeeDataService.csproj" Id="5e2d3b53-7ef1-4781-b38d-2c932f4d08b4" />
-  <Project Path="../employeeModels/employeeModels.csproj" Id="e834784a-9c75-4292-bbf6-1a18dd1d5d47" />
+  <Project Path="employeeAppService/employeeAppService.csproj" Id="8fa0377b-59b3-4646-9a79-6f7cdabd4399" />
+  <Project Path="employeeDataService/employeeDataService.csproj" Id="e417b62f-005d-45bb-a272-f29665a4e579" />
   <Project Path="employeeInformation.csproj" />
+  <Project Path="employeeModels/employeeModels.csproj" Id="14a9bd1e-93e2-4973-b57e-abe097cd3cef" />
 </Solution>
