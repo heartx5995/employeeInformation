@@ -11,6 +11,5 @@ namespace employeeDataService
         Employee GetById(string id);
         void Update(Employee emp);
         void Delete(string id);
-        bool TestConnection();
     }
 }
