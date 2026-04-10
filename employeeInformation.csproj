@@ -8,8 +8,24 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="employeeAppService\**" />
+    <Compile Remove="employeeDataService\**" />
+    <Compile Remove="employeeModels\**" />
+    <EmbeddedResource Remove="employeeAppService\**" />
+    <EmbeddedResource Remove="employeeDataService\**" />
+    <EmbeddedResource Remove="employeeModels\**" />
+    <None Remove="employeeAppService\**" />
+    <None Remove="employeeDataService\**" />
+    <None Remove="employeeModels\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.Data.SqlClient" Version="7.0.0" />
     <PackageReference Include="System.Data.SqlClient" Version="4.9.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="employeeAppService\employeeAppService.csproj" />
   </ItemGroup>
 
 </Project>

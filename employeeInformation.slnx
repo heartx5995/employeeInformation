@@ -1,6 +1,9 @@
 <Solution>
-  <Project Path="employeeAppService/employeeAppService.csproj" Id="8fa0377b-59b3-4646-9a79-6f7cdabd4399" />
-  <Project Path="employeeDataService/employeeDataService.csproj" Id="e417b62f-005d-45bb-a272-f29665a4e579" />
+  <Folder Name="/Data/">
+    <File Path="../../../../../Program Files/Microsoft SQL Server/MSSQL17.SQLEXPRESS/MSSQL/Backup/employeeDB.bak" />
+  </Folder>
+  <Project Path="employeeAppService/employeeAppService.csproj" Id="dcbf8691-0086-4fe8-b60c-ebe184f33f07" />
+  <Project Path="employeeDataService/employeeDataService.csproj" Id="4d49c06e-6d97-4084-8b6b-ed42a61aff2e" />
   <Project Path="employeeInformation.csproj" />
-  <Project Path="employeeModels/employeeModels.csproj" Id="14a9bd1e-93e2-4973-b57e-abe097cd3cef" />
+  <Project Path="employeeModels/employeeModels.csproj" Id="4944fed1-4b50-4809-8d2e-dec524bacf08" />
 </Solution>

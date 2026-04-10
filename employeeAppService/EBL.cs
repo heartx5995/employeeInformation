@@ -28,6 +28,21 @@ namespace employeeAppService
             }
         }
 
+        public bool payValidity(float salary)
+        {
+            try
+            {
+                if(salary>=5000)
+                {
+                    return true;
+                }
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
         public bool addEmp(string id, string firstName, string lastName, string middleName, string suffix,
                            char gender, string birthdate, long phone, string email, string address, string position, float salary)
         {
@@ -57,44 +72,26 @@ namespace employeeAppService
             }
         }
 
-        public void dispIDList()
+        public List<Employee> GetAllEmployees()
         {
-            Console.WriteLine("\nEMPLOYEE IDS:");
-
-            List<Employee> employees = dataService.GetAll();
-
-            for (int i = 0; i < employees.Count; i++)
-            {
-                Console.WriteLine(employees[i].ID);
-            }
+            return dataService.GetAll();
         }
 
-        public void dispSpecificEmployee()
+        public Employee GetEmployeeById(string id)
         {
-            Console.Write("\nEnter Employee ID: ");
-            string searchID = Console.ReadLine();
+            return dataService.GetById(id);
+        }
 
-            Employee e = dataService.GetById(searchID);
-
-            if (e != null)
+        public bool updateEmp(Employee emp)
+        {
+            try
             {
-                Console.WriteLine("\nEMPLOYEE DETAILS");
-                Console.WriteLine($"ID: {e.ID}");
-                Console.WriteLine($"FIRST NAME: {e.FirstName}");
-                Console.WriteLine($"LAST NAME: {e.LastName}");
-                Console.WriteLine($"MIDDLE NAME: {e.MiddleName}");
-                Console.WriteLine($"SUFFIX: {e.Suffix}");
-                Console.WriteLine($"GENDER: {e.Gender}");
-                Console.WriteLine($"BIRTHDATE: {e.Birthdate}");
-                Console.WriteLine($"PHONE NO.: {e.Phone}");
-                Console.WriteLine($"EMAIL: {e.Email}");
-                Console.WriteLine($"ADDRESS: {e.Address}");
-                Console.WriteLine($"POSITION: {e.Position}");
-                Console.WriteLine($"SALARY: {e.Salary}");
+                dataService.Update(emp);
+                return true;
             }
-            else
+            catch
             {
-                Console.WriteLine("Employee ID not found. Refer to full ID list in VIEW EMPLOYEES by typing in '1'");
+                return false;
             }
         }
 
@@ -124,7 +121,6 @@ namespace employeeAppService
                 }
                 else
                 {
-                    Console.WriteLine("Employee ID not found.");
                     return false;
                 }
             }
@@ -147,7 +143,6 @@ namespace employeeAppService
                 }
                 else
                 {
-                    Console.WriteLine("Employee ID not found. Refer to full ID list in VIEW EMPLOYEES");
                     return false;
                 }
             }
