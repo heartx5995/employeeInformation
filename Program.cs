@@ -11,6 +11,7 @@ namespace employeeInformation
 
         static void Main(string[] args)
         {
+            string input;
             string inputForSelect = "";
 
             while (inputForSelect != "5")
@@ -24,9 +25,11 @@ namespace employeeInformation
                               "\n3 - UPDATE EMPLOYEES" +
                               "\n4 - TERMINATE EMPLOYEES" +
                               "\n5 - EXIT SYSTEM" +
+                              "\nh - HELP" +
                               "\n\nSELECT: ");
 
-                inputForSelect = Console.ReadLine();
+                input = Console.ReadLine();
+                inputForSelect = input.ToLower();
 
                 switch (inputForSelect)
                 {
@@ -48,6 +51,10 @@ namespace employeeInformation
 
                     case "5":
                         Console.WriteLine("Exiting system...");
+                        break;
+
+                    case "h":
+                        seeHelp();
                         break;
 
                     default:
@@ -545,6 +552,25 @@ namespace employeeInformation
             {
                 Console.WriteLine("Termination cancelled.");
             }
+        }
+
+        static void seeHelp()
+        {
+            Console.WriteLine("\nHELP - EMPLOYEE MANAGEMENT SYSTEM");
+            Console.WriteLine("This is a tool designed to help with employee management.");
+            Console.WriteLine("1 - HIRE EMPLOYEES: Add new employees to the system by providing their details.");
+            Console.WriteLine("2 - VIEW EMPLOYEES: View a list of employee IDs or details of a specific employee by ID.");
+            Console.WriteLine("                    (1) View all employee IDs");
+            Console.WriteLine("                    (2) View details of a specific employee by ID");
+            Console.WriteLine("                    USE ANY OTHER KEY TO RETURN.");
+            Console.WriteLine("3 - UPDATE EMPLOYEES: Update the information of an existing employee by ID.");
+            Console.WriteLine("                    (1-11) Update a specific field.");
+            Console.WriteLine("                    (A) Update all fields sequentially.");
+            Console.WriteLine("                    USE ANY OTHER KEY TO RETURN.");
+            Console.WriteLine("4 - TERMINATE EMPLOYEES: Remove an employee from the system by ID.");
+            Console.WriteLine("                    (y/n) Confirmation of employee termination command.");
+            Console.WriteLine("5 - EXIT SYSTEM: Exit the application.");
+            Console.WriteLine("h - HELP: View this list.");
         }
     }
 }
