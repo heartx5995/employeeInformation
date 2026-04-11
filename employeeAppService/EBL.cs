@@ -28,19 +28,44 @@ namespace employeeAppService
             }
         }
 
-        public bool payValidity(float salary)
+        public bool isFieldEmpty(string input)//PREEMPTIVE CHECK FOR STRING FIELDS FILLED
         {
+            return string.IsNullOrWhiteSpace(input);
+        }
+
+        public bool isGenderValid(char gender)//GENDER INPUT VALIDITY
+        {
+            return gender == 'F' || gender == 'M' || gender == 'O';
+        }
+
+        public bool isPhoneValid(long phone)//CONTACT NUMBER INPUT VALIDITY (SAMPLE DESIGNATED MINIMUM LENGTH)
+        {
+            return phone.ToString().Length >= 10;
+        }
+
+        public bool isSalaryValid(float salary)//PREEMPTIVE CHECK FOR SALARY VALIDITY (SAMPLE DESIGNATED MONTHLY MINIMUM)
+        {
+            return salary >= 10000;
+        }
+
+        public bool isEmailValid(string email)//EMAIL FORMAT VALIDITY
+        {
+            if (isFieldEmpty(email)) return false;
+
             try
             {
-                if(salary>=5000)
-                {
-                    return true;
-                }
+                var addr = new System.Net.Mail.MailAddress(email);
+                return addr.Address == email;
             }
             catch
             {
                 return false;
             }
+        }
+
+        public bool isBirthdateValid(string birthdate)//BIRTHDATE FORMAT VALIDITY (dd/mm/yyyy)
+        {
+            return DateTime.TryParseExact(birthdate, "dd/MM/yyyy", null, System.Globalization.DateTimeStyles.None, out _);
         }
 
         public bool addEmp(string id, string firstName, string lastName, string middleName, string suffix,
@@ -88,41 +113,6 @@ namespace employeeAppService
             {
                 dataService.Update(emp);
                 return true;
-            }
-            catch
-            {
-                return false;
-            }
-        }
-
-        public bool updateEmp(string searchID, string firstName, string lastName, string middleName, string suffix,
-                              char gender, string birthdate, long phone, string email, string address, string position, float salary)
-        {
-            try
-            {
-                Employee e = dataService.GetById(searchID);
-
-                if (e != null)
-                {
-                    e.FirstName = firstName;
-                    e.LastName = lastName;
-                    e.MiddleName = middleName;
-                    e.Suffix = suffix;
-                    e.Gender = gender;
-                    e.Birthdate = birthdate;
-                    e.Phone = phone;
-                    e.Email = email;
-                    e.Address = address;
-                    e.Position = position;
-                    e.Salary = salary;
-
-                    dataService.Update(e);
-                    return true;
-                }
-                else
-                {
-                    return false;
-                }
             }
             catch
             {

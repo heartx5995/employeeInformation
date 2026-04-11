@@ -64,6 +64,12 @@ namespace employeeInformation
             Console.Write("ID: ");
             string id = Console.ReadLine();
 
+            if (empBL.isFieldEmpty(id))
+            {
+                Console.WriteLine("Error: ID cannot be empty. Hire cancelled.");
+                return;
+            }
+
             if (empBL.EmployeeExists(id))
             {
                 Console.WriteLine("Error: Employee ID already exists. Hire cancelled.");
@@ -72,33 +78,86 @@ namespace employeeInformation
 
             Console.Write("First Name: ");
             string firstName = Console.ReadLine();
+            if (empBL.isFieldEmpty(firstName))
+            {
+                Console.WriteLine("Error: First Name cannot be empty. Hire cancelled.");
+                return;
+            }
+
             Console.Write("Last Name: ");
             string lastName = Console.ReadLine();
+            if (empBL.isFieldEmpty(lastName))
+            {
+                Console.WriteLine("Error: Last Name cannot be empty. Hire cancelled.");
+                return;
+            }
+
             Console.Write("Middle Name: ");
             string middleName = Console.ReadLine();
+
             Console.Write("Suffix (Jr., Sr., III, etc. - If applicable): ");
             string suffix = Console.ReadLine();
-            Console.Write("Gender (F/M): ");
+
+            Console.Write("Gender (F/M/Other (O)): ");
             char g = char.Parse(Console.ReadLine());
             char gender = char.ToUpper(g);
+            if (!empBL.isGenderValid(gender))
+            {
+                Console.WriteLine("Error: Gender must be F, M or O. Hire cancelled.");
+                return;
+            }
+
             Console.Write("Birthdate (dd/mm/yyyy): ");
             string birthdate = Console.ReadLine();
+            if (!empBL.isBirthdateValid(birthdate))
+            {
+                Console.WriteLine("Error: Invalid birthdate format. Use dd/mm/yyyy. Hire cancelled.");
+                return;
+            }
+
             Console.Write("Phone no.: ");
             long phone = long.Parse(Console.ReadLine());
+            if (!empBL.isPhoneValid(phone))
+            {
+                Console.WriteLine("Error: Phone number must be at least 10 digits. Hire cancelled.");
+                return;
+            }
+
             Console.Write("Email: ");
             string email = Console.ReadLine();
+            if (empBL.isFieldEmpty(email))
+            {
+                Console.WriteLine("Error: Email cannot be empty. Hire cancelled.");
+                return;
+            }
+            if (!empBL.isEmailValid(email))
+            {
+                Console.WriteLine("Error: Invalid email format. Hire cancelled.");
+                return;
+            }
+
             Console.Write("Address: ");
             string address = Console.ReadLine();
+            if (empBL.isFieldEmpty(address))
+            {
+                Console.WriteLine("Error: Address cannot be empty. Hire cancelled.");
+                return;
+            }
+
             Console.Write("Company Position: ");
             string position = Console.ReadLine();
+            if (empBL.isFieldEmpty(position))
+            {
+                Console.WriteLine("Error: Position cannot be empty. Hire cancelled.");
+                return;
+            }
+
             Console.Write("Salary: PHP ");
             float salary = float.Parse(Console.ReadLine());
 
-            bool isValidPay = empBL.payValidity(salary);
-
-            if (!isValidPay)
+            if (!empBL.isSalaryValid(salary))
             {
-                Console.WriteLine("Error: Salary must be greater than 0. Update cancelled.");
+                Console.WriteLine("Error: Salary must be at least PHP 5,000. Hire cancelled.");
                 return;
             }
 
@@ -188,22 +247,22 @@ namespace employeeInformation
             Employee empToUpdate = empBL.GetEmployeeById(updateID);
 
             Console.WriteLine("\n=== CURRENT EMPLOYEE INFORMATION ===");
-            Console.WriteLine($"(1) ID: {empToUpdate.ID}\n");
-            Console.WriteLine($"(2) FIRST NAME: {empToUpdate.FirstName}");
-            Console.WriteLine($"(3) LAST NAME: {empToUpdate.LastName}");
-            Console.WriteLine($"(4) MIDDLE NAME: {empToUpdate.MiddleName}");
-            Console.WriteLine($"(5) SUFFIX: {empToUpdate.Suffix}");
-            Console.WriteLine($"(6) GENDER: {empToUpdate.Gender}");
-            Console.WriteLine($"(7) BIRTHDATE: {empToUpdate.Birthdate}");
-            Console.WriteLine($"(8) PHONE: {empToUpdate.Phone}");
-            Console.WriteLine($"(9) EMAIL: {empToUpdate.Email}");
-            Console.WriteLine($"(10) ADDRESS: {empToUpdate.Address}");
-            Console.WriteLine($"(11) POSITION: {empToUpdate.Position}");
-            Console.WriteLine($"(12) SALARY: PHP {empToUpdate.Salary}");
+            Console.WriteLine($"ID: {empToUpdate.ID} (CANNOT BE CHANGED)\n");
+            Console.WriteLine($"(1) FIRST NAME: {empToUpdate.FirstName}");
+            Console.WriteLine($"(2) LAST NAME: {empToUpdate.LastName}");
+            Console.WriteLine($"(3) MIDDLE NAME: {empToUpdate.MiddleName}");
+            Console.WriteLine($"(4) SUFFIX: {empToUpdate.Suffix}");
+            Console.WriteLine($"(5) GENDER: {empToUpdate.Gender}");
+            Console.WriteLine($"(6) BIRTHDATE: {empToUpdate.Birthdate}");
+            Console.WriteLine($"(7) PHONE: {empToUpdate.Phone}");
+            Console.WriteLine($"(8) EMAIL: {empToUpdate.Email}");
+            Console.WriteLine($"(9) ADDRESS: {empToUpdate.Address}");
+            Console.WriteLine($"(10) POSITION: {empToUpdate.Position}");
+            Console.WriteLine($"(11) SALARY: PHP {empToUpdate.Salary}");
 
             Console.WriteLine("\nUPDATE OPTIONS:");
-            Console.WriteLine("Enter 1-12 to update a specific field");
-            Console.WriteLine("A - UPDATE ALL FIELDS");
+            Console.WriteLine("Enter 1-11 to update a specific field");
+            Console.WriteLine("A - UPDATE ALL FIELDS (EXCLUDING ID)");
             Console.WriteLine("ANY OTHER KEY - EXIT TO MAIN MENU");
             Console.Write("SELECT: ");
 
@@ -212,30 +271,99 @@ namespace employeeInformation
             if (updateChoice == "A") //ALL FIELDS
             {
                 Console.WriteLine("\nENTER NEW INFORMATION");
-                Console.Write($"First Name ({empToUpdate.FirstName}): "); empToUpdate.FirstName = Console.ReadLine();
-                Console.Write($"Last Name ({empToUpdate.LastName}): "); empToUpdate.LastName = Console.ReadLine();
-                Console.Write($"Middle Name ({empToUpdate.MiddleName}): "); empToUpdate.MiddleName = Console.ReadLine();
-                Console.Write($"Suffix ({empToUpdate.Suffix}): "); empToUpdate.Suffix = Console.ReadLine();
+
+                Console.Write($"First Name ({empToUpdate.FirstName}): ");
+                string newFirstName = Console.ReadLine();
+                if (empBL.isFieldEmpty(newFirstName))
+                {
+                    Console.WriteLine("Error: First Name cannot be empty. Update cancelled.");
+                    return;
+                }
+                empToUpdate.FirstName = newFirstName;
+
+                Console.Write($"Last Name ({empToUpdate.LastName}): ");
+                string newLastName = Console.ReadLine();
+                if (empBL.isFieldEmpty(newLastName))
+                {
+                    Console.WriteLine("Error: Last Name cannot be empty. Update cancelled.");
+                    return;
+                }
+                empToUpdate.LastName = newLastName;
+
+                Console.Write($"Middle Name ({empToUpdate.MiddleName}): ");
+                empToUpdate.MiddleName = Console.ReadLine();
+
+                Console.Write($"Suffix ({empToUpdate.Suffix}): ");
+                empToUpdate.Suffix = Console.ReadLine();
 
                 Console.Write($"Gender ({empToUpdate.Gender}): ");
                 char g = char.Parse(Console.ReadLine());
                 char gender = char.ToUpper(g);
-                empToUpdate.Gender = gender;
-
-                Console.Write($"Birthdate ({empToUpdate.Birthdate}): "); empToUpdate.Birthdate = Console.ReadLine();
-                Console.Write($"Phone ({empToUpdate.Phone}): "); empToUpdate.Phone = long.Parse(Console.ReadLine());
-                Console.Write($"Email ({empToUpdate.Email}): "); empToUpdate.Email = Console.ReadLine();
-                Console.Write($"Address ({empToUpdate.Address}): "); empToUpdate.Address = Console.ReadLine();
-                Console.Write($"Position ({empToUpdate.Position}): "); empToUpdate.Position = Console.ReadLine();
-                Console.Write($"Salary ({empToUpdate.Salary}): "); empToUpdate.Salary = float.Parse(Console.ReadLine());
-
-                bool isValidPay = empBL.payValidity(empToUpdate.Salary);
-
-                if (!isValidPay)
+                if (!empBL.isGenderValid(gender))
                 {
-                    Console.WriteLine("Error: Salary must be greater than 0. Update cancelled.");
+                    Console.WriteLine("Error: Gender must be F, M or O. Update cancelled.");
                     return;
                 }
+                empToUpdate.Gender = gender;
+
+                Console.Write($"Birthdate ({empToUpdate.Birthdate}): ");
+                string newBirthdate = Console.ReadLine();
+                if (!empBL.isBirthdateValid(newBirthdate))
+                {
+                    Console.WriteLine("Error: Invalid birthdate format. Use dd/mm/yyyy. Update cancelled.");
+                    return;
+                }
+                empToUpdate.Birthdate = newBirthdate;
+
+                Console.Write($"Phone ({empToUpdate.Phone}): ");
+                long newPhone = long.Parse(Console.ReadLine());
+                if (!empBL.isPhoneValid(newPhone))
+                {
+                    Console.WriteLine("Error: Phone number must be at least 10 digits. Update cancelled.");
+                    return;
+                }
+                empToUpdate.Phone = newPhone;
+
+                Console.Write($"Email ({empToUpdate.Email}): ");
+                string newEmail = Console.ReadLine();
+                if (empBL.isFieldEmpty(newEmail))
+                {
+                    Console.WriteLine("Error: Email cannot be empty. Update cancelled.");
+                    return;
+                }
+                if (!empBL.isEmailValid(newEmail))
+                {
+                    Console.WriteLine("Error: Invalid email format. Update cancelled.");
+                    return;
+                }
+                empToUpdate.Email = newEmail;
+
+                Console.Write($"Address ({empToUpdate.Address}): ");
+                string newAddress = Console.ReadLine();
+                if (empBL.isFieldEmpty(newAddress))
+                {
+                    Console.WriteLine("Error: Address cannot be empty. Update cancelled.");
+                    return;
+                }
+                empToUpdate.Address = newAddress;
+
+                Console.Write($"Position ({empToUpdate.Position}): ");
+                string newPosition = Console.ReadLine();
+                if (empBL.isFieldEmpty(newPosition))
+                {
+                    Console.WriteLine("Error: Position cannot be empty. Update cancelled.");
+                    return;
+                }
+                empToUpdate.Position = newPosition;
+
+                Console.Write($"Salary ({empToUpdate.Salary}): ");
+                float newSalary = float.Parse(Console.ReadLine());
+                if (!empBL.isSalaryValid(newSalary))
+                {
+                    Console.WriteLine("Error: Salary must be at least PHP 5,000. Update cancelled.");
+                    return;
+                }
+                empToUpdate.Salary = newSalary;
 
                 empBL.updateEmp(empToUpdate);
                 Console.WriteLine("Employee information successfully updated.");
@@ -243,98 +371,133 @@ namespace employeeInformation
             else if (updateChoice == "1" || updateChoice == "2" || updateChoice == "3" ||
                      updateChoice == "4" || updateChoice == "5" || updateChoice == "6" ||
                      updateChoice == "7" || updateChoice == "8" || updateChoice == "9" ||
-                     updateChoice == "10" || updateChoice == "11" || updateChoice == "12")
+                     updateChoice == "10" || updateChoice == "11")
             {
                 switch (updateChoice)
                 {
                     case "1":
-                        Console.Write($"Enter new ID ({empToUpdate.ID}): ");
-                        string newID = Console.ReadLine();
-                        if (empBL.EmployeeExists(newID))
-                        {
-                            Console.WriteLine("Error: ID already exists. Update cancelled.");
-                        }
-                        else
-                        {
-                            empToUpdate.ID = newID;
-                            empBL.updateEmp(empToUpdate);
-                            Console.WriteLine("ID successfully updated.");
-                        }
-                        break;
-                    case "2":
                         Console.Write($"Enter new First Name ({empToUpdate.FirstName}): ");
-                        empToUpdate.FirstName = Console.ReadLine();
+                        string newFirstName = Console.ReadLine();
+                        if (empBL.isFieldEmpty(newFirstName))
+                        {
+                            Console.WriteLine("Error: First Name cannot be empty. Update cancelled.");
+                            return;
+                        }
+                        empToUpdate.FirstName = newFirstName;
                         empBL.updateEmp(empToUpdate);
                         Console.WriteLine("First Name successfully updated.");
                         break;
-                    case "3":
+                    case "2":
                         Console.Write($"Enter new Last Name ({empToUpdate.LastName}): ");
-                        empToUpdate.LastName = Console.ReadLine();
+                        string newLastName = Console.ReadLine();
+                        if (empBL.isFieldEmpty(newLastName))
+                        {
+                            Console.WriteLine("Error: Last Name cannot be empty. Update cancelled.");
+                            return;
+                        }
+                        empToUpdate.LastName = newLastName;
                         empBL.updateEmp(empToUpdate);
                         Console.WriteLine("Last Name successfully updated.");
                         break;
-                    case "4":
+                    case "3":
                         Console.Write($"Enter new Middle Name ({empToUpdate.MiddleName}): ");
                         empToUpdate.MiddleName = Console.ReadLine();
                         empBL.updateEmp(empToUpdate);
                         Console.WriteLine("Middle Name successfully updated.");
                         break;
-                    case "5":
+                    case "4":
                         Console.Write($"Enter new Suffix ({empToUpdate.Suffix}): ");
                         empToUpdate.Suffix = Console.ReadLine();
                         empBL.updateEmp(empToUpdate);
                         Console.WriteLine("Suffix successfully updated.");
                         break;
-                    case "6":
+                    case "5":
                         Console.Write($"Enter new Gender ({empToUpdate.Gender}): ");
                         char g = char.Parse(Console.ReadLine());
                         char gender = char.ToUpper(g);
+                        if (!empBL.isGenderValid(gender))
+                        {
+                            Console.WriteLine("Error: Gender must be F, M or O. Update cancelled.");
+                            return;
+                        }
                         empToUpdate.Gender = gender;
                         empBL.updateEmp(empToUpdate);
                         Console.WriteLine("Gender successfully updated.");
                         break;
-                    case "7":
+                    case "6":
                         Console.Write($"Enter new Birthdate ({empToUpdate.Birthdate}): ");
-                        empToUpdate.Birthdate = Console.ReadLine();
+                        string newBirthdate = Console.ReadLine();
+                        if (!empBL.isBirthdateValid(newBirthdate))
+                        {
+                            Console.WriteLine("Error: Invalid birthdate format. Use dd/mm/yyyy. Update cancelled.");
+                            return;
+                        }
+                        empToUpdate.Birthdate = newBirthdate;
                         empBL.updateEmp(empToUpdate);
                         Console.WriteLine("Birthdate successfully updated.");
                         break;
-                    case "8":
+                    case "7":
                         Console.Write($"Enter new Phone ({empToUpdate.Phone}): ");
-                        empToUpdate.Phone = long.Parse(Console.ReadLine());
+                        long newPhone = long.Parse(Console.ReadLine());
+                        if (!empBL.isPhoneValid(newPhone))
+                        {
+                            Console.WriteLine("Error: Phone number must be at least 10 digits. Update cancelled.");
+                            return;
+                        }
+                        empToUpdate.Phone = newPhone;
                         empBL.updateEmp(empToUpdate);
                         Console.WriteLine("Phone successfully updated.");
                         break;
-                    case "9":
+                    case "8":
                         Console.Write($"Enter new Email ({empToUpdate.Email}): ");
-                        empToUpdate.Email = Console.ReadLine();
+                        string newEmail = Console.ReadLine();
+                        if (empBL.isFieldEmpty(newEmail))
+                        {
+                            Console.WriteLine("Error: Email cannot be empty. Update cancelled.");
+                            return;
+                        }
+                        if (!empBL.isEmailValid(newEmail))
+                        {
+                            Console.WriteLine("Error: Invalid email format. Update cancelled.");
+                            return;
+                        }
+                        empToUpdate.Email = newEmail;
                         empBL.updateEmp(empToUpdate);
                         Console.WriteLine("Email successfully updated.");
                         break;
-                    case "10":
+                    case "9":
                         Console.Write($"Enter new Address ({empToUpdate.Address}): ");
-                        empToUpdate.Address = Console.ReadLine();
+                        string newAddress = Console.ReadLine();
+                        if (empBL.isFieldEmpty(newAddress))
+                        {
+                            Console.WriteLine("Error: Address cannot be empty. Update cancelled.");
+                            return;
+                        }
+                        empToUpdate.Address = newAddress;
                         empBL.updateEmp(empToUpdate);
                         Console.WriteLine("Address successfully updated.");
                         break;
-                    case "11":
+                    case "10":
                         Console.Write($"Enter new Position ({empToUpdate.Position}): ");
-                        empToUpdate.Position = Console.ReadLine();
+                        string newPosition = Console.ReadLine();
+                        if (empBL.isFieldEmpty(newPosition))
+                        {
+                            Console.WriteLine("Error: Position cannot be empty. Update cancelled.");
+                            return;
+                        }
+                        empToUpdate.Position = newPosition;
                         empBL.updateEmp(empToUpdate);
                         Console.WriteLine("Position successfully updated.");
                         break;
-                    case "12":
+                    case "11":
                         Console.Write($"Enter new Salary ({empToUpdate.Salary}): ");
-                        empToUpdate.Salary = float.Parse(Console.ReadLine());
-
-                        bool isValidPay = empBL.payValidity(empToUpdate.Salary);
-                        
-                        if (!isValidPay)
+                        float newSalary = float.Parse(Console.ReadLine());
+                        if (!empBL.isSalaryValid(newSalary))
                         {
-                            Console.WriteLine("Error: Salary must be greater than 0. Update cancelled.");
+                            Console.WriteLine("Error: Salary must be at least PHP 5,000. Update cancelled.");
                             return;
                         }
-
+                        empToUpdate.Salary = newSalary;
                         empBL.updateEmp(empToUpdate);
                         Console.WriteLine("Salary successfully updated.");
                         break;
