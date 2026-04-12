@@ -68,12 +68,18 @@ namespace employeeInformation
         {
             Console.WriteLine("\nHIRE EMPLOYEE");
 
-            Console.Write("ID: ");
+            Console.Write("ID (Must be 8 characters long and alphanumeric): ");
             string id = Console.ReadLine();
 
             if (empBL.isFieldEmpty(id))
             {
                 Console.WriteLine("Error: ID cannot be empty. Hire cancelled.");
+                return;
+            }
+
+            if (!empBL.isIdValid(id))
+            {
+                Console.WriteLine("Error: ID must be 8 characters long, alphanumeric only. Hire cancelled.");
                 return;
             }
 
@@ -122,13 +128,17 @@ namespace employeeInformation
                 return;
             }
 
-            Console.Write("Phone no.: ");
-            long phone = long.Parse(Console.ReadLine());
-            if (!empBL.isPhoneValid(phone))
+            Console.Write("Phone no. (10 digits, no spaces, no country code): ");
+            string phoneInput = Console.ReadLine();
+
+            if (!empBL.isPhoneValid(phoneInput))
             {
-                Console.WriteLine("Error: Phone number must be at least 10 digits. Hire cancelled.");
+                Console.WriteLine("Error: Invalid phone number. Must be at least 10 digits, numbers only, no spaces, and no country code.");
+                Console.WriteLine("Example: 09123456789. Hire cancelled.");
                 return;
             }
+
+            long phone = long.Parse(phoneInput);
 
             Console.Write("Email: ");
             string email = Console.ReadLine();
@@ -159,12 +169,12 @@ namespace employeeInformation
                 return;
             }
 
-            Console.Write("Salary: PHP ");
+            Console.Write("Monthly Salary: PHP ");
             float salary = float.Parse(Console.ReadLine());
 
             if (!empBL.isSalaryValid(salary))
             {
-                Console.WriteLine("Error: Salary must be at least PHP 5,000. Hire cancelled.");
+                Console.WriteLine("Error: Salary must be at least PHP 10,000. Hire cancelled.");
                 return;
             }
 
@@ -323,12 +333,16 @@ namespace employeeInformation
                 empToUpdate.Birthdate = newBirthdate;
 
                 Console.Write($"Phone ({empToUpdate.Phone}): ");
-                long newPhone = long.Parse(Console.ReadLine());
-                if (!empBL.isPhoneValid(newPhone))
+                string phoneInput = Console.ReadLine();
+
+                if (!empBL.isPhoneValid(phoneInput))
                 {
-                    Console.WriteLine("Error: Phone number must be at least 10 digits. Update cancelled.");
+                    Console.WriteLine("Error: Invalid phone number. Must be at least 10 digits, numbers only, no spaces, and no country code.");
+                    Console.WriteLine("Example: 09123456789. Update cancelled.");
                     return;
                 }
+
+                long newPhone = long.Parse(phoneInput);
                 empToUpdate.Phone = newPhone;
 
                 Console.Write($"Email ({empToUpdate.Email}): ");
@@ -367,7 +381,7 @@ namespace employeeInformation
                 float newSalary = float.Parse(Console.ReadLine());
                 if (!empBL.isSalaryValid(newSalary))
                 {
-                    Console.WriteLine("Error: Salary must be at least PHP 5,000. Update cancelled.");
+                    Console.WriteLine("Error: Salary must be at least PHP 10,000. Update cancelled.");
                     return;
                 }
                 empToUpdate.Salary = newSalary;
@@ -445,12 +459,16 @@ namespace employeeInformation
                         break;
                     case "7":
                         Console.Write($"Enter new Phone ({empToUpdate.Phone}): ");
-                        long newPhone = long.Parse(Console.ReadLine());
-                        if (!empBL.isPhoneValid(newPhone))
+                        string phoneInput = Console.ReadLine();
+
+                        if (!empBL.isPhoneValid(phoneInput))
                         {
-                            Console.WriteLine("Error: Phone number must be at least 10 digits. Update cancelled.");
+                            Console.WriteLine("Error: Invalid phone number. Must be at least 10 digits, numbers only, no spaces, and no country code.");
+                            Console.WriteLine("Example: 09123456789. Update cancelled.");
                             return;
                         }
+
+                        long newPhone = long.Parse(phoneInput);
                         empToUpdate.Phone = newPhone;
                         empBL.updateEmp(empToUpdate);
                         Console.WriteLine("Phone successfully updated.");
@@ -501,7 +519,7 @@ namespace employeeInformation
                         float newSalary = float.Parse(Console.ReadLine());
                         if (!empBL.isSalaryValid(newSalary))
                         {
-                            Console.WriteLine("Error: Salary must be at least PHP 5,000. Update cancelled.");
+                            Console.WriteLine("Error: Salary must be at least PHP 10,000. Update cancelled.");
                             return;
                         }
                         empToUpdate.Salary = newSalary;
@@ -559,6 +577,12 @@ namespace employeeInformation
             Console.WriteLine("\nHELP - EMPLOYEE MANAGEMENT SYSTEM");
             Console.WriteLine("This is a tool designed to help with employee management.");
             Console.WriteLine("1 - HIRE EMPLOYEES: Add new employees to the system by providing their details.");
+            Console.WriteLine("                    DO NOTE:");
+            Console.WriteLine("                    a.) Employee ID must be exactly 8 characters long, only using alphanumeric characters without spaces.");
+            Console.WriteLine("                    b.) All fields of the employee name must be filled accordingly except for MIDDLENAME and SUFFIX.");
+            Console.WriteLine("                    c.) Input phone number must be at least 10 digits, numbers only, no spaces, and no country code.");
+            Console.WriteLine("                    d.) Follow appropriate email format (eg. employeeaddress@email.com)");
+            Console.WriteLine("                    e.) Salary input minimum is set at 10000.");
             Console.WriteLine("2 - VIEW EMPLOYEES: View a list of employee IDs or details of a specific employee by ID.");
             Console.WriteLine("                    (1) View all employee IDs");
             Console.WriteLine("                    (2) View details of a specific employee by ID");

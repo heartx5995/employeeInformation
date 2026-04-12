@@ -33,14 +33,30 @@ namespace employeeAppService
             return string.IsNullOrWhiteSpace(input);
         }
 
+        public bool isIdValid(string id)//CHECK ID LENGTH AND ALPHANUMERIC CONSTRAINTS COMPLIANCE
+        {
+            if (isFieldEmpty(id)) return false;
+            if (id.Length != 8) return false;
+
+            foreach (char c in id)
+            {
+                if (!char.IsLetterOrDigit(c))
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+
         public bool isGenderValid(char gender)//GENDER INPUT VALIDITY
         {
             return gender == 'F' || gender == 'M' || gender == 'O';
         }
 
-        public bool isPhoneValid(long phone)//CONTACT NUMBER INPUT VALIDITY (SAMPLE DESIGNATED MINIMUM LENGTH)
+        // PHONE VALIDATION - Complete validation
+        public bool isPhoneValid(string phone)//CONTACT NUMBER INPUT VALIDITY
         {
-            return phone.ToString().Length >= 10;
+            return !isFieldEmpty(phone) && !phone.Contains(" ") && phone.All(char.IsDigit) && phone.Length >= 10;
         }
 
         public bool isSalaryValid(float salary)//PREEMPTIVE CHECK FOR SALARY VALIDITY (SAMPLE DESIGNATED MONTHLY MINIMUM)
