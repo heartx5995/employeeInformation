@@ -79,9 +79,9 @@ namespace employeeAppService
             }
         }
 
-        public bool isBirthdateValid(string birthdate)//BIRTHDATE FORMAT VALIDITY (dd/mm/yyyy)
+        public bool isBirthdateValid(string birthdate)//BIRTHDATE FORMAT VALIDITY (d/MM/yyyy)
         {
-            return DateTime.TryParseExact(birthdate, "dd/MM/yyyy", null, System.Globalization.DateTimeStyles.None, out _);
+            return DateTime.TryParseExact(birthdate, "d/M/yyyy", null, System.Globalization.DateTimeStyles.None, out _);
         }
 
         public bool addEmp(string id, string firstName, string lastName, string middleName, string suffix,

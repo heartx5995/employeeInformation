@@ -128,7 +128,7 @@ namespace employeeInformation
                 return;
             }
 
-            Console.Write("Phone no. (10 digits, no spaces, no country code): ");
+            Console.Write("Phone no. (At least 10 digits, no spaces, no country code): ");
             string phoneInput = Console.ReadLine();
 
             if (!empBL.isPhoneValid(phoneInput))
